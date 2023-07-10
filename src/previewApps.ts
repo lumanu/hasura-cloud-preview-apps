@@ -179,18 +179,15 @@ export const pollPreviewAppCreationJob = async (
       if (!successEvent) {
         throw new Error('unexpected; no job success task event')
       }
-      context.logger.debug(
-        `pollPreviewAppCreationJob returning ${{
-          projectId: successEvent.public_event_data?.projectId || '',
-          githubDeploymentJobID:
-            successEvent.public_event_data?.githubDeploymentJobID || ''
-        }}`
-      )
-      return {
+      const r = {
         projectId: successEvent.public_event_data?.projectId || '',
         githubDeploymentJobID:
           successEvent.public_event_data?.githubDeploymentJobID || ''
       }
+      context.logger.debug(
+        `pollPreviewAppCreationJob returning ${JSON.stringify(r)}`
+      )
+      return r
     }
 
     if (response.jobs_by_pk.status === 'skipped') {

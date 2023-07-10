@@ -14600,7 +14600,7 @@ const deletePreviewApp = (context) => __awaiter(void 0, void 0, void 0, function
 });
 exports.deletePreviewApp = deletePreviewApp;
 const pollPreviewAppCreationJob = (context, jobId, timeLapse = 0) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d;
+    var _a, _b;
     if (timeLapse > 120000) {
         throw new Error('preview app creation timed out');
     }
@@ -14638,14 +14638,12 @@ const pollPreviewAppCreationJob = (context, jobId, timeLapse = 0) => __awaiter(v
             if (!successEvent) {
                 throw new Error('unexpected; no job success task event');
             }
-            context.logger.debug(`pollPreviewAppCreationJob returning ${{
+            const r = {
                 projectId: ((_a = successEvent.public_event_data) === null || _a === void 0 ? void 0 : _a.projectId) || '',
                 githubDeploymentJobID: ((_b = successEvent.public_event_data) === null || _b === void 0 ? void 0 : _b.githubDeploymentJobID) || ''
-            }}`);
-            return {
-                projectId: ((_c = successEvent.public_event_data) === null || _c === void 0 ? void 0 : _c.projectId) || '',
-                githubDeploymentJobID: ((_d = successEvent.public_event_data) === null || _d === void 0 ? void 0 : _d.githubDeploymentJobID) || ''
             };
+            context.logger.debug(`pollPreviewAppCreationJob returning ${JSON.stringify(r)}`);
+            return r;
         }
         if (response.jobs_by_pk.status === 'skipped') {
             throw new Error('This preview app creation was skipped due to another preview app creation being scheduled.');
