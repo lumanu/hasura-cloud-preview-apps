@@ -14772,7 +14772,13 @@ const getRealtimeLogs = (jobId, context, retryCount = 0) => __awaiter(void 0, vo
     if (retryCount > 0) {
         yield utils_1.waitFor(2000);
     }
-    const jobStatus = yield getJobStatus(jobId, context);
+    let jobStatus;
+    try {
+        jobStatus = yield getJobStatus(jobId, context);
+    }
+    catch (error) {
+        return exports.getRealtimeLogs(jobId, context, retryCount + 1);
+    }
     if (jobStatus === 'success') {
         return 'success';
     }
