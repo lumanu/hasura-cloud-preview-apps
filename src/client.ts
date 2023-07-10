@@ -8,7 +8,11 @@ export const createGqlClient = (parameters: Parameters, logger: Logger) => {
     variables?: VariablesType
   }): Promise<QueryResponseType> => {
     try {
-      logger.debug('Making GraphQL query to Hasura Cloud API...')
+      logger.debug(
+        `Making GraphQL query to Hasura Cloud API...\nquery=${JSON.stringify(
+          opts.query
+        )}\nvariables=${JSON.stringify(opts.variables)}`
+      )
       const respRaw = await fetch(parameters.CLOUD_DATA_GRAPHQL, {
         method: 'POST',
         headers: {

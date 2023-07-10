@@ -13898,7 +13898,7 @@ const createGqlClient = (parameters, logger) => {
     const query = (opts) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         try {
-            logger.debug('Making GraphQL query to Hasura Cloud API...');
+            logger.debug(`Making GraphQL query to Hasura Cloud API...\nquery=${JSON.stringify(opts.query)}\nvariables=${JSON.stringify(opts.variables)}`);
             const respRaw = yield node_fetch_1.default(parameters.CLOUD_DATA_GRAPHQL, {
                 method: 'POST',
                 headers: {
